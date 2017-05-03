@@ -56,11 +56,15 @@
 
         <script type="text/javascript">
             document.getElementById('button').onclick = function() {
+
+
                 const currency = document.getElementById('currency').value;
                 const total = document.getElementById('total').value;
 
                 const holder = document.getElementById('responseHolder');
 
+				holder.innerHTML = '';
+				
                 fetch(`/bestDeal/${currency}`)
                     .then(function (response) {
                         response.text().then(function (responseText) {
