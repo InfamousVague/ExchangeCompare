@@ -65,11 +65,15 @@
                     .then(function (response) {
                         response.text().then(function (responseText) {
                             holder.innerHTML += `<h3>Best Exchange: ${JSON.parse(responseText).cheapestExchange}</h3>`;
-                            holder.innerHTML += `<h3>Current Rate: ${JSON.parse(responseText).cheapest}</h3>`;
+                            holder.innerHTML += `<h3>Best Rate: ${JSON.parse(responseText).cheapest}</h3>`;
                             fetch(`/total/${currency}/${total}`)
                                 .then(function (r2) {
                                     r2.text().then(function (responseText2) {
                                         holder.innerHTML += `<h3>Total Purchasable: ${JSON.parse(responseText2).totals[JSON.parse(responseText).cheapestExchange]} ${currency.split('_')[1]}</h3>`;
+										holder.innerHTML += `<h3>Total Purchasable (poloniex): ${JSON.parse(responseText2).totals['poloniex']} ${currency.split('_')[1]}</h3>`;
+										holder.innerHTML += `<h3>Total Purchasable (bittrex): ${JSON.parse(responseText2).totals['bittrex']} ${currency.split('_')[1]}</h3>`;
+
+
                                     })
                                 })
                             
@@ -80,7 +84,21 @@
                                     })
                                 })
                         });
-                    });                
+                    });      
+				
+				fetch(`/rates`)
+					.then(function (r3) {
+						console.log('got here')
+						r3.text().then(function (responseText3) {
+							holder.innerHTML += `<h3>Bittrex Price: ${JSON.parse(responseText3)['bittrex'][currency]} /${currency.split('_')[1]}</h3>`;
+							holder.innerHTML += `<h3>Poloniex Price: ${JSON.parse(responseText3)['poloniex'][currency]} /${currency.split('_')[1]}</h3>`;
+						})
+					})
+
+
+										
+					
+					    
             }
         </script>
 	</body>
