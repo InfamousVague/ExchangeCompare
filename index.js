@@ -6,18 +6,20 @@ const fs = require('fs')
 
 const { rates, bestDeal, total, compare, exchanges, supportedCurrencies } = require('./routes')
 
-const { Poloniex, Bittrex, Kraken } = require('./exchanges')
+const { Poloniex, Bittrex, Kraken, BTCe } = require('./exchanges')
 
 const poloniex = new Poloniex(['BTC_ETH', 'BTC_LTC', 'BTC_DASH'], '_')
 const bittrex = new Bittrex(['BTC-ETH', 'BTC-LTC', 'BTC-DASH'], '_')
 const kraken = new Kraken(['BTC-ETH', 'BTC-LTC', 'BTC-DASH'], '_')
+const btce = new BTCe(['BTC-ETH', 'BTC-LTC'], '_')
 
 // Pass supported exchanges into ctx for usage in routes
 app.use(function *(ctx){
   this.state.exchanges = {
       poloniex,
       bittrex,
-      kraken
+      kraken,
+      btce
   }
   ctx.next()
 })
@@ -28,7 +30,9 @@ const history = [] // Ideally this would go in a DB
 app.use(function *(ctx){
   const exchangeRates = {
       poloniex: poloniex.getCurrentRates().rates,
-      bittrex: bittrex.getCurrentRates().rates
+      bittrex: bittrex.getCurrentRates().rates,
+      btce: bittrex.getCurrentRates().rates,
+      kraken: bittrex.getCurrentRates().rates
   }
 
   history.push({
