@@ -76,6 +76,8 @@
                                         holder.innerHTML += `<h3>Total Purchasable: ${JSON.parse(responseText2).totals[JSON.parse(responseText).cheapestExchange]} ${currency.split('_')[1]}</h3>`;
 										holder.innerHTML += `<h3>Total Purchasable (poloniex): ${JSON.parse(responseText2).totals['poloniex']} ${currency.split('_')[1]}</h3>`;
 										holder.innerHTML += `<h3>Total Purchasable (bittrex): ${JSON.parse(responseText2).totals['bittrex']} ${currency.split('_')[1]}</h3>`;
+										holder.innerHTML += `<h3>Total Purchasable (BTC-E): ${JSON.parse(responseText2).totals['btce']} ${currency.split('_')[1]}</h3>`;
+										holder.innerHTML += `<h3>Total Purchasable (kraken): ${JSON.parse(responseText2).totals['kraken']} ${currency.split('_')[1]}</h3>`;
 
 
                                     })
@@ -96,6 +98,9 @@
 						r3.text().then(function (responseText3) {
 							holder.innerHTML += `<h3>Bittrex Price: ${JSON.parse(responseText3)['bittrex'][currency]} /${currency.split('_')[1]}</h3>`;
 							holder.innerHTML += `<h3>Poloniex Price: ${JSON.parse(responseText3)['poloniex'][currency]} /${currency.split('_')[1]}</h3>`;
+							holder.innerHTML += `<h3>Kraken Price: ${JSON.parse(responseText3)['kraken'][currency]} /${currency.split('_')[1]}</h3>`;
+							holder.innerHTML += `<h3>BTC-E Price: ${JSON.parse(responseText3)['btce'][currency]} /${currency.split('_')[1]}</h3>`;
+
 						})
 					})
 
