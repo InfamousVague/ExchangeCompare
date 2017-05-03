@@ -21,6 +21,7 @@ class Kraken {
 
     _populateRates() {
         this.currencies.map(currency => {
+            // This parsing sucks, ideally each exchange will need a parser to standardize things. (WHY ARE YOU PADDING THEM KRAKEN)
             let pair = `${currency.split('-')[1]}-${currency.split('-')[0]}`.replace('BTC', 'XBT').replace('-', '')
             // fetch the inital ticker values
             fetch(`https://api.kraken.com/0/public/Ticker?pair=${pair}`)

@@ -21,7 +21,8 @@ class BTCe {
 
     _populateRates() {
         this.currencies.map(currency => {
-            let pair = `${currency.split('-')[1].toLowerCase()}_${currency.split('-')[0].toLowerCase()}`
+            // This parsing sucks, ideally each exchange will need a parser to standardize things.
+            let pair = `${currency.split('-')[1].toLowerCase()}_${currency.split('-')[0].toLowerCase()}`.replace('dash', 'dsh')
             // fetch the inital ticker values
             fetch(`https://btc-e.com/api/3/ticker/${pair}`)
                 .then((res) => {
@@ -29,7 +30,7 @@ class BTCe {
                 }).then((body) => {
                     const result = JSON.parse(body)[pair]
 
-                    this.rates[currency] = parseFloat(result.last)
+                    this.rates[currency.replace('-', this.seperator)] = parseFloat(result.last)
                     this.open = true
                 }).catch(function(err) {
                     console.log(err)
