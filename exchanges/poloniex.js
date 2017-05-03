@@ -18,6 +18,12 @@ class Poloniex {
         this.seperator = seperator
         this.supportedCurrencies = []
 
+        
+        this._populateSupportedCurrencies()
+        this._connectToTicker()
+    }
+
+    _connectToTicker() {
         const connection = new autobahn.Connection({
             url: wsuri,
             realm: "realm1"
@@ -28,7 +34,7 @@ class Poloniex {
             // about a given currency, add it to the rates.
             const tickerEvent = (args, kwargs) => {
                 if (currencies.includes(args[0])) {
-                    this.rates[args[0].replace('_', this.seperator)] = args[1]
+                    this.rates[args[0].replace('_', this.seperator)] = parseFloat(args[1])
                 }
             }
             // Subscribe to ticker events
@@ -41,7 +47,7 @@ class Poloniex {
                 }).then((body) => {
                     const response = JSON.parse(body)
                     this.currencies.map(currency => {
-                        this.rates[currency] = response[currency].last
+                        this.rates[currency] = parseFloat(response[currency].last)
                     })
 
                     this.open = true
@@ -49,8 +55,6 @@ class Poloniex {
                     console.log(err)
                 })
         }
-
-        this._populateSupportedCurrencies()
         
         connection.onclose = () => {
             this.open = false

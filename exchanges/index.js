@@ -1,4 +1,5 @@
 module.exports = {
     Poloniex: require('./poloniex'),
-    Bittrex: require('./bittrex')
+    Bittrex: require('./bittrex'),
+    Kraken: require('./kraken')
 }

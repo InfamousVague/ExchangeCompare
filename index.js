@@ -6,16 +6,18 @@ const fs = require('fs')
 
 const { rates, bestDeal, total, compare, exchanges, supportedCurrencies } = require('./routes')
 
-const { Poloniex, Bittrex } = require('./exchanges')
+const { Poloniex, Bittrex, Kraken } = require('./exchanges')
 
 const poloniex = new Poloniex(['BTC_ETH', 'BTC_LTC', 'BTC_DASH'], '_')
 const bittrex = new Bittrex(['BTC-ETH', 'BTC-LTC', 'BTC-DASH'], '_')
+const kraken = new Kraken(['BTC-ETH', 'BTC-LTC', 'BTC-DASH'], '_')
 
 // Pass supported exchanges into ctx for usage in routes
 app.use(function *(ctx){
   this.state.exchanges = {
       poloniex,
-      bittrex
+      bittrex,
+      kraken
   }
   ctx.next()
 })
