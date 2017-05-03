@@ -4,7 +4,7 @@ const app = new Koa()
 
 const fs = require('fs')
 
-const { rates, bestDeal, total, compare, exchanges } = require('./routes')
+const { rates, bestDeal, total, compare, exchanges, supportedCurrencies } = require('./routes')
 
 const { Poloniex, Bittrex } = require('./exchanges')
 
@@ -56,6 +56,9 @@ app.use(route.get('/exchanges', exchanges))
 
 // Get the current rates across all exchanges
 app.use(route.get('/rates', rates))
+
+// Get a list of supported currencies by exchange
+app.use(route.get('/supportedCurrencies/:exchange', supportedCurrencies))
 
 // Find out what the best deal is for trading the provided currency
 app.use(route.get('/bestDeal/:currency', bestDeal))

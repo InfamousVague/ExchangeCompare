@@ -3,5 +3,6 @@ module.exports = {
     bestDeal: require('./bestDeal'),
     total: require('./total'),
     compare: require('./compare'),
-    exchanges: require('./exchanges')
+    exchanges: require('./exchanges'),
+    supportedCurrencies: require('./supportedCurrencies')
 }

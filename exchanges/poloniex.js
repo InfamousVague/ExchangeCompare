@@ -16,6 +16,7 @@ class Poloniex {
         this.rates = {}
         this.open = false
         this.seperator = seperator
+        this.supportedCurrencies = []
 
         const connection = new autobahn.Connection({
             url: wsuri,
@@ -48,12 +49,39 @@ class Poloniex {
                     console.log(err)
                 })
         }
+
+        this._populateSupportedCurrencies()
         
         connection.onclose = () => {
             this.open = false
         }
                             
         connection.open()
+    }
+
+    _populateSupportedCurrencies() {
+        // Fetch supported currencies
+        fetch('https://poloniex.com/public?command=returnCurrencies')
+            .then((res) => {
+                return res.text();
+            }).then((body) => {
+                const response = JSON.parse(body)
+                Object.keys(response).map(currency => {
+                    if (response[currency].delisted === 0) {
+                        this.supportedCurrencies.push(currency)
+                    }
+                })
+            }).catch(function(err) {
+                console.log(err)
+            })
+    }
+
+    /**
+     * Get a list of currencies supported by this exchange
+     * @return {array} currencies - Current (or last known) list of currencies.
+     */
+    fetchSupportedCurrencies() {
+        return this.supportedCurrencies
     }
 
     /**

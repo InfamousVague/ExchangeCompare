@@ -14,9 +14,12 @@ class Bittrex {
         this.rates = {}
         this.open = false
         this.seperator = seperator
+        this.supportedCurrencies = []
 
         this.updateTickerValues()
         setInterval(this.updateTickerValues.bind(this), 5000)
+
+        this._populateSupportedCurrencies()
     }
 
     updateTickerValues() {
@@ -33,6 +36,29 @@ class Bittrex {
                 })
         })
         this.open = true
+    }
+    
+     _populateSupportedCurrencies() {
+        // Fetch supported currencies
+        fetch('https://bittrex.com/api/v1.1/public/getcurrencies')
+            .then((res) => {
+                return res.text();
+            }).then((body) => {
+                const response = JSON.parse(body)
+                response.result.map(currency => {
+                    this.supportedCurrencies.push(currency.Currency)
+                })
+            }).catch(function(err) {
+                console.log(err)
+            })
+    }
+
+    /**
+     * Get a list of currencies supported by this exchange
+     * @return {array} currencies - Current (or last known) list of currencies.
+     */
+    fetchSupportedCurrencies() {
+        return this.supportedCurrencies
     }
 
     /**

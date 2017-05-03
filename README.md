@@ -31,6 +31,35 @@ Congrats, you're up and running!
 ### Example: `http://localhost:8008/rates`
 
 
+---
+
+### Route: `/supportedCurrencies/:exchange`
+### Method: `get`
+### Function: `List currently supported currencies by exchange`
+### Response
+```
+[
+  "AMP",
+  "ARDR",
+  "BCN",
+  "BCY",
+  "BELA",
+  "BLK",
+  "BTC",
+  "BTCD",
+  "BTM",
+  "BTS",
+  "BURST",
+  "CLAM",
+  "DASH",
+  "DCR",
+  "DGB",
+  ...
+]
+```
+### Example: `http://localhost:8008/supportedCurrencies/:poloniex`
+
+
 
 ---
 
