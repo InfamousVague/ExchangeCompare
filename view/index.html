@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head> 
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+		<!-- Website CSS style -->
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+		<title>ExchangeCompare</title>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row main">
+                <h2>Ugly but functional test enviroment</h2>
+				<div class="main-login main-center">
+				<h5>Let's get you the best deal on exchanging cryptos</h5>
+					<form class="" method="post" action="#">
+						
+						<div class="form-group">
+							<label for="name" class="cols-sm-2 control-label">Select your currency</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<select value="BTC_ETH" id="currency" class="form-control">
+                                        <option value="BTC_ETH">BTC_ETH</option>
+                                        <option value="BTC_LTC">BTC_LTC</option>
+                                        <option value="BTC_DASH">BTC_DASH</option>
+                                    </select>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="email" class="cols-sm-2 control-label">How many BTC do you want to exchange?</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+									<input type="text" class="form-control" name="total" id="total"  placeholder="20"/>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="form-group ">
+							<a target="_blank" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Check Rates</a>
+						</div>
+						
+
+                        <div id="responseHolder">
+
+                        </div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+        <script type="text/javascript">
+            document.getElementById('button').onclick = function() {
+                const currency = document.getElementById('currency').value;
+                const total = document.getElementById('total').value;
+
+                const holder = document.getElementById('responseHolder');
+
+                fetch(`/bestDeal/${currency}`)
+                    .then(function (response) {
+                        response.text().then(function (responseText) {
+                            holder.innerHTML += `<h3>Best Exchange: ${JSON.parse(responseText).cheapestExchange}</h3>`;
+                            holder.innerHTML += `<h3>Current Rate: ${JSON.parse(responseText).cheapest}</h3>`;
+                            fetch(`/total/${currency}/${total}`)
+                                .then(function (r2) {
+                                    r2.text().then(function (responseText2) {
+                                        holder.innerHTML += `<h3>Total Purchasable: ${JSON.parse(responseText2).totals[JSON.parse(responseText).cheapestExchange]} ${currency.split('_')[1]}</h3>`;
+                                    })
+                                })
+                            
+                            fetch(`compare/poloniex/bittrex/${currency}/${total}`)
+                                .then(function (r3) {
+                                    r3.text().then(function (responseText3) {
+                                        holder.innerHTML += `<h3>You get an extra: ${JSON.parse(responseText3).savings} ${currency.split('_')[1]}</h3>`;
+                                    })
+                                })
+                        });
+                    });                
+            }
+        </script>
+	</body>
+</html>

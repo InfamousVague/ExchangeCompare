@@ -1,0 +1,19 @@
+{
+  "name": "shapeshiftcodechallenge",
+  "version": "1.0.0",
+  "description": "Does all the things!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "wski",
+  "license": "ISC",
+  "dependencies": {
+    "autobahn": "^17.5.1",
+    "koa": "^2.2.0",
+    "koa-ejs": "^4.0.0",
+    "koa-route": "^3.2.0",
+    "node-fetch": "^1.6.3"
+  }
+}
