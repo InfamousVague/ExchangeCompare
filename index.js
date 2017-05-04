@@ -81,3 +81,5 @@ app.use(route.get('/history', ctx => {
 }))
 
 app.listen(8008)
+
+// https://www.youtube.com/watch?v=VuNIsY6JdUw
